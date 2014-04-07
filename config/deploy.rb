@@ -5,12 +5,12 @@ set :application, "tw_houses"
 set :rails_env, "production"
 
 set :branch, "master"
-set :repository,  "git@github.com:KosbrotherSchool/tw_houses_s.git"
+set :repository,  "https://github.com/KosbrotherSchool/tw_houses_s.git"
 set :scm, "git"
 set :user, "apps" # 一個伺服器上的帳戶用來放你的應用程式，不需要有sudo權限，但是需要有權限可以讀取Git repository拿到原始碼
 
 set :deploy_to, "/home/apps/tw_houses"
-set :deploy_via, :remote_cache
+# set :deploy_via, :remote_cache
 set :use_sudo, false
 
 role :web, "106.186.31.71"
