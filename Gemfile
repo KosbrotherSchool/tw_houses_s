@@ -53,8 +53,10 @@ gem 'slim'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
-gem 'capistrano'
+gem 'capistrano', '~> 2.15'
 gem 'capistrano-ext'
+
+gem "net-ssh", "~> 2.7.0"
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
