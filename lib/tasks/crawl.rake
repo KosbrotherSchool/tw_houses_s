@@ -24,6 +24,32 @@ namespace :crawl do
 	#  firstRow
 	#  totalRows
 
+
+	task :crawl_town_lat_lng => :environment do
+		towns = Town.all
+		towns.each do |town|
+
+			puts town.name
+
+			search_s = County.find(town.county_id).name + town.name
+
+			url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{search_s}&sensor=false"
+			url = URI.encode(url)
+			uri = URI.parse(url)
+
+			response = Net::HTTP.get_response(uri)
+			# puts response.body
+
+			res = JSON(response.body)
+			town.y_lat = res["results"][0]["geometry"]["location"]["lat"]
+			town.x_lng = res["results"][0]["geometry"]["location"]["lng"]
+			town.save	
+
+			sleep(2)
+
+		end
+	end
+
 	task :load_proxy_list => :environment do
 
 		File.open('_reliable_list.txt').each_line{ |s|
