@@ -146,6 +146,56 @@ g = GroundType.new
 g.name = "其他"
 g.save
 
+r = RentType.new
+r.name = "整層住家"
+r.save
+
+r = RentType.new
+r.name = "獨立套房"
+r.save
+
+r = RentType.new
+r.name = "分租套房"
+r.save
+
+r = RentType.new
+r.name = "雅房"
+r.save
+
+r = RentType.new
+r.name = "店面"
+r.save
+
+r = RentType.new
+r.name = "攤位"
+r.save
+
+r = RentType.new
+r.name = "辦公"
+r.save
+
+r = RentType.new
+r.name = "住辦"
+r.save
+
+r = RentType.new
+r.name = "廠房"
+r.save
+
+r = RentType.new
+r.name = "車位"
+r.save
+
+r = RentType.new
+r.name = "土地"
+r.save
+
+r = RentType.new
+r.name = "場地"
+r.save
+
+
+
 
 
 

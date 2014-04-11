@@ -42,4 +42,11 @@ namespace :parse do
 		end
 	end
 
+	task :parse_all_rent_raw_list => :environment do
+		all_raw_list = RawRentList.all
+		all_raw_list.each do |raw_list|
+			ParseRentListWorker.perform_async(raw_list.id)
+		end
+	end
+
 end

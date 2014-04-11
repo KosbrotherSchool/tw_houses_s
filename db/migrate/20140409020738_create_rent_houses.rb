@@ -30,6 +30,7 @@ class CreateRentHouses < ActiveRecord::Migration
       t.boolean :is_cooking
       t.boolean :is_pet
       t.string :identity
+      t.string :sexual_restriction
       t.string :orientation
       t.string :furniture
       t.string :equipment
@@ -39,7 +40,7 @@ class CreateRentHouses < ActiveRecord::Migration
 
       t.string :verder_name
       t.string :phone_link
-      t.integer :phone_number
+      t.string :phone_number
 
       t.integer :building_type_id
       t.integer :rent_type_id

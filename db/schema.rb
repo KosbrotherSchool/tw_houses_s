@@ -21,11 +21,13 @@ ActiveRecord::Schema.define(version: 20140409020738) do
 
   create_table "counties", force: true do |t|
     t.string   "name"
+    t.integer  "county_web_id"
+    t.integer  "county_house_num"
+    t.integer  "current_house_page_num"
+    t.integer  "county_rent_num"
+    t.integer  "current_rent_page_num"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "county_web_id"
-    t.integer  "county_nums"
-    t.integer  "current_page_num"
   end
 
   create_table "ground_types", force: true do |t|
@@ -125,6 +127,7 @@ ActiveRecord::Schema.define(version: 20140409020738) do
     t.boolean  "is_cooking"
     t.boolean  "is_pet"
     t.string   "identity"
+    t.string   "sexual_restriction"
     t.string   "orientation"
     t.string   "furniture"
     t.string   "equipment"
@@ -133,7 +136,7 @@ ActiveRecord::Schema.define(version: 20140409020738) do
     t.text     "feature_html"
     t.string   "verder_name"
     t.string   "phone_link"
-    t.integer  "phone_number"
+    t.string   "phone_number"
     t.integer  "building_type_id"
     t.integer  "rent_type_id"
     t.integer  "county_id"
