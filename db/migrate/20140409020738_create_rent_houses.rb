@@ -47,6 +47,10 @@ class CreateRentHouses < ActiveRecord::Migration
       t.integer :county_id
       t.integer :town_id  
 
+      t.boolean :is_show
+      t.boolean :is_keep_show
+      t.boolean :is_need_update
+
       t.timestamps
     end
   end

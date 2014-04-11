@@ -47,29 +47,49 @@ class RawListParser
 
 				puts "item num = " + item_num.to_s
 
-				house = RentHouse.new
+				
 
 				url = "http://rent.591.com.tw/"
 				# promote_pic, title, link
 				item = page_no.css(".shList")[item_num]
-
-				house.title = item.css(".title").children[0]["title"]
-				house.promote_pic_link = item.css(".imgbd").children[0]["src"]
-				if house.promote_pic_link.index("nophoto")
-					house.promote_pic_link = ""
-				end
-
-				house.link = url + item.css(".title").children[0]["href"]
-				house.county_id = raw_list.county_id
+				house_link = url + item.css(".title").children[0]["href"]
 				
-				type_s = item.css(".right p")[2].children.to_s
-				RentType.all.each do |type|
-					if type_s.index(type.name)
-						house.rent_type_id = type.id
+
+				if RentHouse.where("link like ?",house_link).size() >= 1					
+					# update
+					house = RentHouse.where("link like ?",house_link).first
+					house.is_keep_show = true
+					house.is_need_update = false
+					house.save
+				else
+					# create
+					house = RentHouse.new
+
+					house.title = item.css(".title").children[0]["title"]
+					house.promote_pic_link = item.css(".imgbd").children[0]["src"]
+					if house.promote_pic_link.index("nophoto")
+						house.promote_pic_link = ""
 					end
+
+					house.link = url + item.css(".title").children[0]["href"]
+
+					house.county_id = raw_list.county_id
+				
+					type_s = item.css(".right p")[2].children.to_s
+					RentType.all.each do |type|
+						if type_s.index(type.name)
+							house.rent_type_id = type.id
+						end
+					end
+
+					house.is_keep_show = true
+					house.is_need_update = true
+
+					house.save
+
 				end
 
-				house.save
+				
 
 			end
 

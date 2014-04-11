@@ -15,6 +15,50 @@ namespace :crawl_rent do
 		end
 	end
 
+	task :new_carawl_all_raw_list => :environment do
+
+		counties = County.all
+		counties.each do |county|
+
+			region_id = county.county_web_id
+
+			url = "http://sale.591.com.tw/index.php?module=search&action=rslist&is_new_list=1&type=2&searchtype=1&region=#{region_id}&orderType=desc&kind=9"
+			uri = URI.parse(url)			
+
+			response = Net::HTTP::get_response(uri)
+			res = JSON(response.body)
+			
+			county.county_rent_num = res["count"].gsub(",","").to_i
+			
+			puts county.name + " county num = " + county.county_rent_num.to_s
+			puts "page num = 1"
+
+			rawListPage = RawRentList.new
+			rawListPage.html = res["main"]
+			rawListPage.page_num = 1
+			rawListPage.county_id = county.id
+			rawListPage.is_parsed = false
+			
+			rawListPage.save
+			county.current_rent_page_num = 1
+			county.save
+			
+			int_pages = county.county_rent_num / 20
+			if (county.county_rent_num%20 == 0)
+				int_pages = int_pages -1
+			end
+
+			if (int_pages >= 1)
+				1.upto int_pages do | page_num |
+
+					puts  "page num = " + (page_num+1).to_s
+					params = "county_id="+county.id.to_s+","+"page_num="+page_num.to_s
+					RawRentListNewWorker.perform_async(params)
+				end
+			end
+		end
+	end
+
 	task :crawl_rent_list_data_test => :environment do
 
 		# ChunHua 
@@ -71,7 +115,7 @@ namespace :crawl_rent do
 	end
 
 	task :crawl_all_rent_house_detail => :environment do
-		houses = RentHouse.all
+		houses = RentHouse.where("is_keep_show = true")
 		houses.each do |house|
 			RentDetailWorker.perform_async(house.id)
 		end
