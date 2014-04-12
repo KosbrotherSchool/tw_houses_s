@@ -44,4 +44,9 @@ namespace :data do
 	    	end
 	  	end
 	end
+
+	task :update_show => :environment do
+		RentHouse.update_all("is_show = is_keep_show")
+	end
+
 end

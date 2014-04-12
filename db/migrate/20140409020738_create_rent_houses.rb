@@ -51,6 +51,8 @@ class CreateRentHouses < ActiveRecord::Migration
       t.boolean :is_keep_show
       t.boolean :is_need_update
 
+      t.integer :create_date_num
+
       t.timestamps
     end
   end

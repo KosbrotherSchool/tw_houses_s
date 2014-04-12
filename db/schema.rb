@@ -141,6 +141,10 @@ ActiveRecord::Schema.define(version: 20140411060237) do
     t.integer  "rent_type_id"
     t.integer  "county_id"
     t.integer  "town_id"
+    t.boolean  "is_show"
+    t.boolean  "is_keep_show"
+    t.boolean  "is_need_update"
+    t.integer  "create_date_num"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

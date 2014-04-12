@@ -121,8 +121,7 @@ class RawListCrawler
 		region_id = county.county_web_id
 		firstRow = page_num * 20
 		totalRows = county.county_rent_num
-		url = "http://sale.591.com.tw/index.php?module=search&action=rslist&is_new_list=1&type=2&searchtype=1&region=#{region_id}&orderType=desc&listview=img&firstRow=#{firstRow}&totalRows=#{totalRows}"
-
+		url = "http://rent.591.com.tw/index.php?module=search&action=rslist&is_new_list=1&type=1&searchtype=1&region=#{region_id}&orderType=desc&listview=img&firstRow=#{firstRow}&totalRows=#{totalRows}"
 		uri = URI.parse(url)
 		code = ""
 		while code != "200"
@@ -156,7 +155,7 @@ class RawListCrawler
 			
 		end	
 	end
-	
+
 	# def crawl_rent_list(county_id)
 		
 	# 	county = County.find(county_id)

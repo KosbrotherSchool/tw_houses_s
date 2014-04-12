@@ -41,7 +41,7 @@ namespace :ocr do
 
 	task :download_all_imgs => :environment do
 
-		houses = RentHouse.where("phone_link is not null")
+		houses = RentHouse.where("phone_link is not null and is_need_update = true")
 		houses.each do |house|
 			DownloadImageWorker.perform_async(house.id)
 		end
@@ -50,7 +50,7 @@ namespace :ocr do
 
 	task :ocr_all_imgs => :environment do
 
-		houses = RentHouse.where("phone_link is not null")
+		houses = RentHouse.where("phone_link is not null and is_need_update = true")
 		houses.each do |house|
 			OcrWorker.perform_async(house.id)
 		end

@@ -22,7 +22,7 @@ namespace :crawl_rent do
 
 			region_id = county.county_web_id
 
-			url = "http://sale.591.com.tw/index.php?module=search&action=rslist&is_new_list=1&type=2&searchtype=1&region=#{region_id}&orderType=desc&kind=9"
+			url = "http://rent.591.com.tw/index.php?module=search&action=rslist&is_new_list=1&type=1&searchtype=1&region=#{region_id}&orderType=desc&listview=img&shType=list"
 			uri = URI.parse(url)			
 
 			response = Net::HTTP::get_response(uri)
@@ -49,13 +49,15 @@ namespace :crawl_rent do
 			end
 
 			if (int_pages >= 1)
+				
 				1.upto int_pages do | page_num |
-
 					puts  "page num = " + (page_num+1).to_s
 					params = "county_id="+county.id.to_s+","+"page_num="+page_num.to_s
 					RawRentListNewWorker.perform_async(params)
 				end
+
 			end
+
 		end
 	end
 
@@ -97,7 +99,7 @@ namespace :crawl_rent do
 
 				firstRow = page_num * 20
 				totalRows = county_nums
-				url = "http://sale.591.com.tw/index.php?module=search&action=rslist&is_new_list=1&type=2&searchtype=1&region=#{region_id}&orderType=desc&listview=img&firstRow=#{firstRow}&totalRows=#{totalRows}"
+				url = "http://rent.591.com.tw/index.php?module=search&action=rslist&is_new_list=1&type=2&searchtype=1&region=#{region_id}&orderType=desc&listview=img&firstRow=#{firstRow}&totalRows=#{totalRows}"
 
 				uri = URI.parse(url)
 				response = Net::HTTP.get_response(uri)
@@ -115,7 +117,7 @@ namespace :crawl_rent do
 	end
 
 	task :crawl_all_rent_house_detail => :environment do
-		houses = RentHouse.where("is_keep_show = true")
+		houses = RentHouse.where("is_need_update = true")
 		houses.each do |house|
 			RentDetailWorker.perform_async(house.id)
 		end

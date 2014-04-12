@@ -59,8 +59,34 @@ class RawListParser
 					# update
 					house = RentHouse.where("link like ?",house_link).first
 					house.is_keep_show = true
-					house.is_need_update = false
+					
+					update_s = item.css(".right p")[3].children.to_s
+
+					if update_s.index("分鐘") || update_s.index("小時")
+
+						house.promote_pic_link = item.css(".imgbd").children[0]["src"]
+						if house.promote_pic_link.index("nophoto")
+							house.promote_pic_link = ""
+						end
+						house.is_need_update = true
+
+					else
+
+						Time.zone = "Taipei"
+						time = Time.zone.now
+						time_num = time.year * 10000 + time.month * 100 + time.day
+
+						# avoid new item read twice and set is_need_update to false
+						if (time_num - house.create_date_num) == 0
+							house.is_need_update = true
+						else
+							house.is_need_update = false
+						end
+
+					end				
+
 					house.save
+
 				else
 					# create
 					house = RentHouse.new
@@ -84,6 +110,11 @@ class RawListParser
 
 					house.is_keep_show = true
 					house.is_need_update = true
+
+					Time.zone = "Taipei"
+					time = Time.zone.now
+					time_num = time.year * 10000 + time.month * 100 + time.day
+					house.create_date_num = time_num
 
 					house.save
 
