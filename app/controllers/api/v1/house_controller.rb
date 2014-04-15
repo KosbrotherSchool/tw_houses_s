@@ -31,8 +31,9 @@ class Api::V1::HouseController < ApplicationController
 
 	def get_rents_by_distance
 
-		# http://localhost:3000/api/v1/house/get_rents_by_distance?km_dis=1&center_x=121.4588&center_y=25.05535
-		
+		# http://localhost:3000/api/v1/house/get_rents_by_distance?km_dis=0.3&center_x=121.4588&center_y=25.05535
+		# http://106.186.31.71/api/v1/house/get_rents_by_distance?km_dis=0.3&center_x=121.4588&center_y=25.05535
+
 		km_dis = params[:km_dis].to_d
 		center_x = params[:center_x].to_f
     	center_y = params[:center_y].to_f
@@ -216,7 +217,7 @@ class Api::V1::HouseController < ApplicationController
 
 		critera = "x_long IS NOT NULL and y_lat IS NOT NULL and is_show = true"
 		border = "and x_long > #{center_x - degree_dis} and x_long < #{center_x + degree_dis} and y_lat > #{center_y - degree_dis} and y_lat < #{center_y + degree_dis}" 
-		items = RentHouse.select("id, price, x_long, y_lat, rent_type_id").where("#{critera} #{border}  #{rentTypeString} #{buildingTypeString} #{priceString} #{areaString}")
+		items = RentHouse.select("id, title, promote_pic_link,  price, address, rent_area, layer, total_lyaers, rooms, rest_rooms, x_long, y_lat, rent_type_id").where("#{critera} #{border}  #{rentTypeString} #{buildingTypeString} #{priceString} #{areaString}")
 
 		render :json => items
 	end
