@@ -49,4 +49,20 @@ namespace :data do
 		RentHouse.update_all("is_show = is_keep_show")
 	end
 
+	task :change_picture_to_rent_picture => :environment do
+		Picture.all.each do |pic|
+			puts pic.id.to_s
+			picture = RentPicture.new
+			picture.picture_link = pic.picture_link
+			picture.rent_id = pic.house_id
+			picture.save
+		end
+	end
+
+	task :change_xy_column => :environment do
+		RentHouse.update_all("xy_change = x_long")
+		RentHouse.update_all("x_long = y_lat")
+		RentHouse.update_all("y_lat = xy_change")
+	end
+
 end

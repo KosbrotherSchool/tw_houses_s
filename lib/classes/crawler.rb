@@ -61,12 +61,15 @@ module Crawler
       begin
         response = Net::HTTP::Proxy(proxy_addr, proxy_port).get_response(uri)
         code = response.code
+        puts code
       rescue Exception => e
         
       end 
-      if code != "200"
+      if code == "200" || code == "404" || code == "302"
+        break
+      else
         proxy.delete
-      end   
+      end  
     end
     body = response.body
     doc = Nokogiri::HTML(body, nil, "UTF-8")

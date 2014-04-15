@@ -26,7 +26,7 @@ namespace :crawl do
 
 
 	task :crawl_town_lat_lng => :environment do
-		towns = Town.all
+		towns = Town.where("x_lng is Null")
 		towns.each do |town|
 
 			puts town.name
