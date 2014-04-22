@@ -73,97 +73,97 @@ class Api::V1::HouseController < ApplicationController
 			else
 				if rent_type.index("a")
 					if rentTypeString.length == 0
-						rentTypeString = rentTypeString + " and ( ground_type_id = 1"
+						rentTypeString = rentTypeString + " and ( rent_type_id = 1"
 					else
-						rentTypeString = rentTypeString + " or ground_type_id = 1"
+						rentTypeString = rentTypeString + " or rent_type_id = 1"
 					end
 				end
 
 				if rent_type.index("b")
 					if rentTypeString.length == 0
-						rentTypeString = rentTypeString + " and ( ground_type_id = 2"
+						rentTypeString = rentTypeString + " and ( rent_type_id = 2"
 					else
-						rentTypeString = rentTypeString + " or ground_type_id = 2"
+						rentTypeString = rentTypeString + " or rent_type_id = 2"
 					end
 				end
 
 				if rent_type.index("c")
 					if rentTypeString.length == 0
-						rentTypeString = rentTypeString + " and ( ground_type_id = 3"
+						rentTypeString = rentTypeString + " and ( rent_type_id = 3"
 					else
-						rentTypeString = rentTypeString + " or ground_type_id = 3"
+						rentTypeString = rentTypeString + " or rent_type_id = 3"
 					end
 				end
 
 				if rent_type.index("d")
 					if rentTypeString.length == 0
-						rentTypeString = rentTypeString + " and ( ground_type_id = 4"
+						rentTypeString = rentTypeString + " and ( rent_type_id = 4"
 					else
-						rentTypeString = rentTypeString + " or ground_type_id = 4"
+						rentTypeString = rentTypeString + " or rent_type_id = 4"
 					end
 				end
 
 				if rent_type.index("e")
 					if rentTypeString.length == 0
-						rentTypeString = rentTypeString + " and ( ground_type_id = 5"
+						rentTypeString = rentTypeString + " and ( rent_type_id = 5"
 					else
-						rentTypeString = rentTypeString + " or ground_type_id = 5"
+						rentTypeString = rentTypeString + " or rent_type_id = 5"
 					end
 				end
 
 				if rent_type.index("f")
 					if rentTypeString.length == 0
-						rentTypeString = rentTypeString + " and ( ground_type_id = 6"
+						rentTypeString = rentTypeString + " and ( rent_type_id = 6"
 					else
-						rentTypeString = rentTypeString + " or ground_type_id = 6"
+						rentTypeString = rentTypeString + " or rent_type_id = 6"
 					end
 				end
 
 				if rent_type.index("g")
 					if rentTypeString.length == 0
-						rentTypeString = rentTypeString + " and ( ground_type_id = 7"
+						rentTypeString = rentTypeString + " and ( rent_type_id = 7"
 					else
-						rentTypeString = rentTypeString + " or ground_type_id = 7"
+						rentTypeString = rentTypeString + " or rent_type_id = 7"
 					end
 				end
 
 				if rent_type.index("h")
 					if rentTypeString.length == 0
-						rentTypeString = rentTypeString + " and ( ground_type_id = 8"
+						rentTypeString = rentTypeString + " and ( rent_type_id = 8"
 					else
-						rentTypeString = rentTypeString + " or ground_type_id = 8"
+						rentTypeString = rentTypeString + " or rent_type_id = 8"
 					end
 				end
 
 				if rent_type.index("i")
 					if rentTypeString.length == 0
-						rentTypeString = rentTypeString + " and ( ground_type_id = 9"
+						rentTypeString = rentTypeString + " and ( rent_type_id = 9"
 					else
-						rentTypeString = rentTypeString + " or ground_type_id = 9"
+						rentTypeString = rentTypeString + " or rent_type_id = 9"
 					end
 				end
 
 				if rent_type.index("j")
 					if rentTypeString.length == 0
-						rentTypeString = rentTypeString + " and ( ground_type_id = 10"
+						rentTypeString = rentTypeString + " and ( rent_type_id = 10"
 					else
-						rentTypeString = rentTypeString + " or ground_type_id = 10"
+						rentTypeString = rentTypeString + " or rent_type_id = 10"
 					end
 				end
 
 				if rent_type.index("k")
 					if rentTypeString.length == 0
-						rentTypeString = rentTypeString + " and ( ground_type_id = 11"
+						rentTypeString = rentTypeString + " and ( rent_type_id = 11"
 					else
-						rentTypeString = rentTypeString + " or ground_type_id = 11"
+						rentTypeString = rentTypeString + " or rent_type_id = 11"
 					end
 				end
 
 				if rent_type.index("l")
 					if rentTypeString.length == 0
-						rentTypeString = rentTypeString + " and ( ground_type_id = 12"
+						rentTypeString = rentTypeString + " and ( rent_type_id = 12"
 					else
-						rentTypeString = rentTypeString + " or ground_type_id = 12"
+						rentTypeString = rentTypeString + " or rent_type_id = 12"
 					end
 				end
 
@@ -220,6 +220,21 @@ class Api::V1::HouseController < ApplicationController
 		items = RentHouse.select("id, title, promote_pic_link,  price, address, rent_area, layer, total_lyaers, rooms, rest_rooms, x_long, y_lat, rent_type_id").where("#{critera} #{border}  #{rentTypeString} #{buildingTypeString} #{priceString} #{areaString}")
 
 		render :json => items
+	end
+
+	def get_countys
+
+		countys = County.select("id, name").all
+		render :json => countys
+
+	end
+
+	def get_county_towns
+
+		county_id = params[:county_id]
+		towns = Town.select("id, name, x_lng, y_lat").where("county_id = #{county_id}")
+
+		render :json => towns
 	end
 
 end

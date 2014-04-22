@@ -9,6 +9,8 @@ TwHouses::Application.routes.draw do
 	      get 'get_rents_by_ids'
 	      get 'get_rent_detail'
 	      get 'get_rents_by_distance'
+	      get 'get_countys'
+	      get 'get_county_towns'
 	    end
 	  end
 	end

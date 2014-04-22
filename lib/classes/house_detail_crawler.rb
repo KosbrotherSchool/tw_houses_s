@@ -291,6 +291,7 @@ class HouseDetailCrawler
 
 				feature_html = crawler.page_html.css(".feature .inner")
 				feature_html.css(".shop_info").remove
+				feature_html.css("style").remove
 				house.feature_html = feature_html.to_html
 
 			
