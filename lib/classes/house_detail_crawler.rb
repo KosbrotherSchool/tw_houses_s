@@ -1,4 +1,4 @@
-#encoding: utf8_general_ci
+# encoding: utf-8
 class HouseDetailCrawler
 	include Crawler
 
@@ -136,10 +136,13 @@ class HouseDetailCrawler
 		0.upto pic_nums -1 do |pic_num|
 			pic_link = crawler.page_html.css(".thumbnails li")[pic_num].children[0].children[0]["src"]
 			pic_link = pic_link.gsub("94x68","374x269")
-			picture = Picture.new
-			picture.picture_link = pic_link
-			picture.house_id = house.id
-			picture.save
+			#  check this pic is exist or not
+			if Picture.where("picture_link like ?",pic_link).size() == 0
+				picture = Picture.new
+				picture.picture_link = pic_link
+				picture.house_id = house.id
+				picture.save
+			end
 		end
 	end
 

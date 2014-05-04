@@ -117,7 +117,7 @@ namespace :crawl_rent do
 	end
 
 	task :crawl_all_rent_house_detail => :environment do
-		houses = RentHouse.where("is_need_update = true")
+		houses = RentHouse.where("is_keep_show = true")
 		houses.each do |house|
 			RentDetailWorker.perform_async(house.id)
 		end
