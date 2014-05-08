@@ -4,7 +4,8 @@ class DownloadImageWorker
 
   	def perform(house_id)
 	    house = RentHouse.find(house_id)
-	    if house.phone_number == nil    
+	    if house.phone_number == nil
+	    	# puts house_id.to_s
 			url =  house.phone_link
 			downloaded_file = File.open("phone_pics/image#{house.id}.jpeg",'wb')
 			
@@ -14,7 +15,9 @@ class DownloadImageWorker
 
 			request = Typhoeus::Request.new(
 				url,
-				:proxy => proxy_addr+":"+proxy_port	
+				:proxy => proxy_addr+":"+proxy_port,
+				:timeout => 50, 
+				:forbid_reuse => true
 			)
 
 			request.on_body do |chunk|
@@ -23,13 +26,14 @@ class DownloadImageWorker
 
 			request.run
 
-			if request.response.code != 200	
-				puts request.response.code
+			if request.response.code != 200
+				# puts request.response.code
+				puts house_id.to_s + " fail"
 				proxy.delete
 				#  do again
 				DownloadImageWorker.perform_async(house.id)
 			else
-				puts "OK"
+				puts house_id.to_s + " OK"
 				# add to OcrWorker
 				# OcrWorker.perform_async(house.id)
 			end

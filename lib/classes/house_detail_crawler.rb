@@ -156,6 +156,7 @@ class HouseDetailCrawler
 
 		detail = crawler.page_html.css("#detailInfo")
 		if detail.size == 0
+			puts "detail missing means reant_house missing"
 			house.is_show = false
 			house.is_keep_show = false
 			house.save
@@ -296,7 +297,7 @@ class HouseDetailCrawler
 				feature_html.css(".shop_info").remove
 				feature_html.css("style").remove
 				house.feature_html = feature_html.to_html
-
+				# puts "feature_html"
 			
 				house.verder_name = crawler.page_html.css(".contact .linkman")[0].children[0].to_s
 				house.phone_link = crawler.page_html.css(".contact .number")[0].children.children[0]["src"]
@@ -309,18 +310,27 @@ class HouseDetailCrawler
 				# crawl pics
 				pic_nums = crawler.page_html.css(".thumbnails li").size()
 				0.upto pic_nums -1 do |pic_num|
+					# puts "pic_num :" + pic_num.to_s
 					pic_link = crawler.page_html.css(".thumbnails li")[pic_num].children[0].children[0]["src"]
 					pic_link = pic_link.gsub("94x68","374x269")
-					picture = RentPicture.new
-					picture.picture_link = pic_link
-					picture.house_id = house.id
-					picture.save
+					# picture = RentPicture.new
+					# picture.picture_link = pic_link
+					# picture.house_id = house.id
+					# picture.save
+					if RentPicture.where("picture_link like ?",pic_link).size() == 0
+						picture = RentPicture.new
+						picture.picture_link = pic_link
+						picture.rent_id = house.id
+						picture.save
+					end
 				end
 
 			rescue Exception => e
+				puts "exception error means bug"
 				house.is_show = false
 				house.is_keep_show = false
 				house.save
+				RentDetailWorker.perform_async(house.id)
 			end
 		end
 	end
