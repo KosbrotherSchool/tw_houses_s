@@ -9,7 +9,7 @@ class DownloadImageWorker
 			url =  house.phone_link
 			downloaded_file = File.open("phone_pics/image#{house.id}.jpeg",'wb')
 			
-			proxy = Proxy.find(:first, :order => "RAND()")
+			proxy = Proxy.order("RAND()").first
 		    proxy_addr = proxy.proxy_addr
 		    proxy_port = proxy.proxy_port.to_s
 

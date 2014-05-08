@@ -15,7 +15,7 @@ class RawListCrawler
 			
 			code = ""
 			while code != "200"
-				proxy = Proxy.find(:first, :order => "RAND()")
+				proxy = Proxy.order("RAND()").first
 				proxy_addr = proxy.proxy_addr
 				proxy_port = proxy.proxy_port
 				# puts "addr = " + proxy_addr + " port = " + proxy_port.to_s
@@ -74,7 +74,7 @@ class RawListCrawler
 					
 					code = ""
 					while code != "200"
-						proxy = Proxy.find(:first, :order => "RAND()")
+						proxy = Proxy.order("RAND()").first
 						proxy_addr = proxy.proxy_addr
 						proxy_port = proxy.proxy_port
 						puts "addr = " + proxy_addr + " port = " + proxy_port.to_s
@@ -125,7 +125,7 @@ class RawListCrawler
 		uri = URI.parse(url)
 		code = ""
 		while code != "200"
-			proxy = Proxy.find(:first, :order => "RAND()")
+			proxy = Proxy.order("RAND()").first
 			proxy_addr = proxy.proxy_addr
 			proxy_port = proxy.proxy_port
 			puts "addr = " + proxy_addr + " port = " + proxy_port.to_s

@@ -232,28 +232,38 @@ class HouseDetailCrawler
 
 				other_info_items = crawler.page_html.css(".contenter")[0].css(".inner").children
 
-			
-
 				0.upto other_info_items.size()-1 do |item_num|
 
 					if other_info_items[item_num].to_s.index("管理費")
 						gp = other_info_items[item_num].children.to_s
 						if gp.index("元")
-							house.guard_price = gp[gp.index("：")+1..gp.index("元")-1].to_i
+							begin
+								house.guard_price = gp[gp.index("：")+1..gp.index("元")-1].to_i
+							rescue Exception => e
+								house.guard_price = nil
+							end							
 						end
 					elsif other_info_items[item_num].to_s.index("朝向")
 						os = other_info_items[item_num].children.to_s
 						house.orientation = os[os.index("：")+1..os.length]
 					elsif other_info_items[item_num].to_s.index("最短租期")
 						ss = other_info_items[item_num].children.to_s
-						house.mint_rent_time  = ss[ss.index("：")+1..ss.length]
+						begin
+							house.mint_rent_time  = ss[ss.index("：")+1..ss.length]
+						rescue Exception => e
+							house.mint_rent_time = nil
+						end						
 					elsif other_info_items[item_num].to_s.index("開伙")
 						house.is_cooking = true
 					elsif other_info_items[item_num].to_s.index("寵物")
 						house.is_pet = true
 					elsif other_info_items[item_num].to_s.index("身份要求")
 						is = other_info_items[item_num].children.to_s
-						house.identity = is[is.index("：")+1..is.length]
+						begin
+							house.identity = is[is.index("：")+1..is.length]
+						rescue Exception => e
+							house.identity = nil
+						end				
 					elsif other_info_items[item_num].to_s.index("性別要求")
 						ss = other_info_items[item_num].children.to_s
 						# house.sexual_restriction  = ss[ss.index("：")+1..ss.length]
@@ -285,10 +295,19 @@ class HouseDetailCrawler
 						house.equipment = item_s
 					elsif other_info_items[item_num].to_s.index("生活機能")
 						lp = other_info_items[item_num].children.to_s
-						house.living_explanation = lp[lp.index("：")+1..lp.length]
+						begin
+							house.living_explanation = lp[lp.index("：")+1..lp.length]
+						rescue Exception => e
+							house.living_explanation = nil
+						end
+						
 					elsif other_info_items[item_num].to_s.index("附近交通")
 						cs = other_info_items[item_num].children.to_s
-						house.communication = cs[cs.index("：")+1..cs.length]
+						begin
+							house.communication = cs[cs.index("：")+1..cs.length]
+						rescue Exception => e
+							house.communication = nil
+						end		
 					end
 
 				end
@@ -305,6 +324,8 @@ class HouseDetailCrawler
 				latlan_s = latlan_s[latlan_s.index("q=")+2..latlan_s.index("&z=")-1]
 				house.y_lat =  latlan_s[0..latlan_s.index(",")-1].to_d
 				house.x_long = latlan_s[latlan_s.index(",")+1..latlan_s.length].to_d
+				house.is_show = true
+				house.is_keep_show = true
 				house.save
 
 				# crawl pics
@@ -326,11 +347,11 @@ class HouseDetailCrawler
 				end
 
 			rescue Exception => e
-				puts "exception error means bug"
+				puts "exception error means bug" + " house id " + house.id.to_s
 				house.is_show = false
 				house.is_keep_show = false
 				house.save
-				RentDetailWorker.perform_async(house.id)
+				# RentDetailWorker.perform_async(house.id)
 			end
 		end
 	end
