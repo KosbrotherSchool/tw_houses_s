@@ -14,9 +14,9 @@ set :deploy_to, "/home/apps/tw_houses"
 # set :deploy_via, :remote_cache
 set :use_sudo, false
 
-role :web, "106.187.50.158"
-role :app, "106.187.50.158"
-role :db,  "106.187.50.158", :primary => true
+role :web, "106.187.39.88"
+role :app, "106.187.39.88"
+role :db,  "106.187.39.88", :primary => true
 
 namespace :deploy do
 
