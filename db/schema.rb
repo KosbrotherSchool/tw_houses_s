@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140414103618) do
+ActiveRecord::Schema.define(version: 20140515114212) do
 
   create_table "building_types", force: true do |t|
     t.string   "name"
@@ -70,6 +70,10 @@ ActiveRecord::Schema.define(version: 20140414103618) do
     t.integer  "town_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_show"
+    t.boolean  "is_keep_show"
+    t.boolean  "is_need_update"
+    t.integer  "create_date_num"
   end
 
   create_table "pictures", force: true do |t|

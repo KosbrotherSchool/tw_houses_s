@@ -118,6 +118,7 @@ c.name = "連江縣"
 c.county_web_id = 26
 c.save 
 
+
 b = BuildingType.new
 b.name = "公寓"
 b.save
@@ -143,8 +144,42 @@ g.name = "住宅"
 g.save
 
 g = GroundType.new
+g.name = "套房"
+g.save
+
+g = GroundType.new
+g.name = "店面"
+g.save
+
+g = GroundType.new
+g.name = "攤位"
+g.save
+
+g = GroundType.new
+g.name = "辦公"
+g.save
+
+g = GroundType.new
+g.name = "住辦"
+g.save
+
+g = GroundType.new
+g.name = "廠房"
+g.save
+
+g = GroundType.new
+g.name = "車位"
+g.save
+
+g = GroundType.new
+g.name = "土地"
+g.save
+
+g = GroundType.new
 g.name = "其他"
 g.save
+
+
 
 r = RentType.new
 r.name = "整層住家"

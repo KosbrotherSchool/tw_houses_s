@@ -407,14 +407,6 @@ namespace :crawl do
 end
 
 
-# http://sale.591.com.tw/index.php?module=search&action=rslist&is_new_list=1&type=2&searchtype=1&region=8&orderType=desc&listview=img&section=104
-# http://sale.591.com.tw/index.php?module=search&action=rslist&is_new_list=1&type=2&searchtype=1&region=8&orderType=desc&listview=img
-# http://sale.591.com.tw/index.php?module=search&action=rslist&is_new_list=1&type=2&searchtype=1&region=8&orderType=desc&listview=img&section=103,104,105
-# http://sale.591.com.tw/index.php?module=search&action=rslist&is_new_list=1&type=2&searchtype=1&region=8&orderType=desc&listview=img&section=103,104,105&firstRow=20&totalRows=9743
-# http://sale.591.com.tw/index.php?module=search&action=rslist&is_new_list=1&type=2&searchtype=1&region=8&orderType=desc&listview=img&section=103,104,105&firstRow=0&totalRows=9744
-
-
-
 
 
 

@@ -8,12 +8,12 @@ require "open-uri"
 
 namespace :crawl_rent do
 
-	task :crawl_all_raw_list => :environment do
-		counties = County.all
-		counties.each do |county|
-			RawRentListWorker.perform_async(county.id)
-		end
-	end
+	# task :crawl_all_raw_list => :environment do
+	# 	counties = County.all
+	# 	counties.each do |county|
+	# 		RawRentListWorker.perform_async(county.id)
+	# 	end
+	# end
 
 	task :new_carawl_all_raw_list => :environment do
 
