@@ -41,7 +41,7 @@ namespace :ocr do
 
 	task :download_all_rent_imgs => :environment do
 
-		houses = RentHouse.where("phone_link is not null and is_keep_show = true")
+		houses = RentHouse.where("phone_link is not null and is_keep_show = true").where("phone_link not like?","")
 		houses.each do |house|
 			DownloadImageWorker.perform_async(house.id)
 		end
@@ -50,7 +50,7 @@ namespace :ocr do
 
 	task :ocr_all_rent_imgs => :environment do
 
-		houses = RentHouse.where("phone_link is not null and is_keep_show = true")
+		houses = RentHouse.where("phone_link is not null and is_keep_show = true").where("phone_link not like?","")
 		houses.each do |house|
 			OcrWorker.perform_async(house.id)
 		end
@@ -59,7 +59,7 @@ namespace :ocr do
 
 	task :download_all_house_imgs => :environment do
 
-		houses = House.where("phone_link is not null and is_keep_show = true")
+		houses = House.where("phone_link is not null and is_keep_show = true").where("phone_link not like?","")
 		houses.each do |house|
 			DownloadHouseImageWorker.perform_async(house.id)
 		end
@@ -68,7 +68,7 @@ namespace :ocr do
 
 	task :ocr_all_house_imgs => :environment do
 
-		houses = House.where("phone_link is not null and is_keep_show = true")
+		houses = House.where("phone_link is not null and is_keep_show = true").where("phone_link not like?","")
 		houses.each do |house|
 			OcrHouseWorker.perform_async(house.id)
 		end

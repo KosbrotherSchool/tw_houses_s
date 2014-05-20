@@ -223,18 +223,25 @@ class Api::V1::HouseController < ApplicationController
 	end
 
 	def get_countys
-
 		countys = County.select("id, name").all
 		render :json => countys
-
 	end
 
 	def get_county_towns
-
 		county_id = params[:county_id]
 		towns = Town.select("id, name, x_lng, y_lat").where("county_id = #{county_id}")
 
 		render :json => towns
+	end
+
+	def get_rent_type
+		rent_types = RentType.select("id, name").all
+		render :json => rent_types
+	end
+
+	def get_sale_type
+		sale_types = GroundType.select("id, name").all
+		render :json => sale_types
 	end
 
 end

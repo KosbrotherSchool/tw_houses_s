@@ -26,7 +26,7 @@ namespace :crawl_sale do
 
 			county.county_house_num = res["count"].gsub(",","").to_i
 
-			puts county.name + " county num = " + county.county_rent_num.to_s
+			puts county.name + " county num = " + county.county_house_num.to_s
 			puts "page num = 1"
 
 			rawListPage = RawList.new
@@ -58,6 +58,13 @@ namespace :crawl_sale do
 
 	task :crawl_all_house_detail => :environment do
 		houses = House.where("is_keep_show = true")
+		houses.each do |house|
+			HouseDetailWorker.perform_async(house.id)
+		end
+	end
+
+	task :crawl_no_detail_houses => :environment do
+		houses = House.where("price is null")
 		houses.each do |house|
 			HouseDetailWorker.perform_async(house.id)
 		end
