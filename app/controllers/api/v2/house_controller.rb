@@ -3,6 +3,9 @@ class Api::V2::HouseController < ApplicationController
 	# http://localhost:3000/api/v2/house/get_houses_by_distance?km_dis=0.3&center_x=121.517315&center_y=25.047908
 	def get_houses_by_distance
 
+		is_show_rent = params[:is_show_rent].to_i
+		is_show_sale = params[:is_show_sale].to_i
+
 		km_dis = params[:km_dis].to_d
 		center_x = params[:center_x].to_f
     	center_y = params[:center_y].to_f
@@ -271,9 +274,18 @@ class Api::V2::HouseController < ApplicationController
 		border = "and x_long > #{center_x - degree_dis} and x_long < #{center_x + degree_dis} and y_lat > #{center_y - degree_dis} and y_lat < #{center_y + degree_dis}"
 
 		house_data = Array.new
-		rent_items = RentHouse.select("id, title, promote_pic_link,  price, address, rent_area, layer, total_lyaers, rooms, rest_rooms, x_long, y_lat, rent_type_id").where("#{critera} #{border} #{rentTypeString} #{rentPriceString} #{rentAreaString}")
-		house_items = House.select("id, title, promote_pic_link,  price, address, total_area, layer, total_lyaers, rooms, rest_rooms, x_long, y_lat, ground_type_id").where("#{critera} #{border} #{groundTypeString} #{houseAgeString} #{housePriceString} #{houseAreaString}")
-
+		if is_show_rent == 1
+			rent_items = RentHouse.select("id, title, promote_pic_link,  price, address, rent_area, layer, total_lyaers, rooms, rest_rooms, x_long, y_lat, rent_type_id").where("#{critera} #{border} #{rentTypeString} #{rentPriceString} #{rentAreaString}")
+		else
+			rent_items = Array.new
+		end
+		
+		if is_show_sale == 1
+			house_items = House.select("id, title, promote_pic_link,  price, address, total_area, layer, total_lyaers, rooms, rest_rooms, x_long, y_lat, ground_type_id").where("#{critera} #{border} #{groundTypeString} #{houseAgeString} #{housePriceString} #{houseAreaString}")
+		else
+			house_items = Array.new
+		end
+		
 		house_data << rent_items
 		house_data << house_items
 
