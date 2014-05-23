@@ -23,6 +23,7 @@ TwHouses::Application.routes.draw do
 		  resources :house, :only => [:index, :show] do
 		    collection do
 		      get 'get_houses_by_distance'
+		      get 'get_sale_detail'
 		    end
 		  end
 		end

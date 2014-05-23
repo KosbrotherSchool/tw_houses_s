@@ -1,5 +1,20 @@
 class Api::V2::HouseController < ApplicationController
 
+	def get_sale_detail
+
+		id = params[:house_id]
+		house = House.find(id)
+		house_pics = Picture.where("house_id = #{id}")
+
+		detail_data = Array.new
+		detail_data << house
+		detail_data << house_pics
+
+		render :json => detail_data
+
+	end
+
+
 	# http://localhost:3000/api/v2/house/get_houses_by_distance?km_dis=0.3&center_x=121.517315&center_y=25.047908
 	def get_houses_by_distance
 
