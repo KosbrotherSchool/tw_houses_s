@@ -181,7 +181,7 @@ class HouseDetailCrawler
 				latlan_s = latlan_s[latlan_s.index("q=")+2..latlan_s.index("&z=")-1]
 				house.y_lat =  latlan_s[0..latlan_s.index(",")-1].to_d
 				house.x_long = latlan_s[latlan_s.index(",")+1..latlan_s.length].to_d
-				house.is_show = true
+				# house.is_show = true
 				house.is_keep_show = true
 				house.save
 
@@ -388,7 +388,7 @@ class HouseDetailCrawler
 				latlan_s = latlan_s[latlan_s.index("q=")+2..latlan_s.index("&z=")-1]
 				house.y_lat =  latlan_s[0..latlan_s.index(",")-1].to_d
 				house.x_long = latlan_s[latlan_s.index(",")+1..latlan_s.length].to_d
-				house.is_show = true
+				# house.is_show = true
 				house.is_keep_show = true
 				house.save
 

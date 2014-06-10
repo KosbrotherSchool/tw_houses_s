@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140515114212) do
+ActiveRecord::Schema.define(version: 20140523061858) do
 
   create_table "building_types", force: true do |t|
     t.string   "name"
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20140515114212) do
     t.text     "feature_html"
     t.string   "verder_name"
     t.string   "phone_link"
-    t.integer  "phone_number"
+    t.string   "phone_number"
     t.integer  "building_type_id"
     t.integer  "ground_type_id"
     t.integer  "county_id"
